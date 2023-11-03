@@ -5,9 +5,10 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_percentage_error
 
-# Загрузка файла .csv
-st.title("Линейная Регрессия и Графики")
+st.title("Приложение по применению ***модели линейной регрессии***")
+st.subheader("Приложение загружает файл .csv. Далее предлагает выбрать 'target' и 'features', после этого нормализирует данные, делит выборку на тестовую и валидационную.  Получает результат линейной регрессии и предоставляет возможность визуализировать зависимость целевой переменной и признаков")
 
 uploaded_file = st.file_uploader("Загрузите файл .csv", type=["csv"])
 if uploaded_file is not None:
@@ -31,9 +32,16 @@ if uploaded_file is not None:
 
     # Обучение линейной регрессии
     model = LinearRegression()
-    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size = 0.2)
+    X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2)
     model.fit(X_train, y_train)
 
+    # Вычисление предсказаний на валидационной выборке
+    y_pred = model.predict(X_valid)
+
+    # Рассчет метрики mean_absolute_percentage_error
+    mape = mean_absolute_percentage_error(y_valid, y_pred)
+    st.write(f"Mean Absolute Percentage Error: {mape}")
+    
     st.subheader("Результаты регрессии:")
     results = dict(zip(features, model.coef_))
     results["intercept"] = model.intercept_
