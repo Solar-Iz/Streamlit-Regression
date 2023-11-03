@@ -39,7 +39,7 @@ if uploaded_file is not None:
     results["intercept"] = model.intercept_
     st.write(results)
 
-    # st.set_option('deprecation.showPyplotGlobalUse', False)  # Отключение предупреждения
+    st.set_option('deprecation.showPyplotGlobalUse', False)  # Отключение предупреждения
     # Визуализация графиков
     st.subheader("Графики:")
     plot_type = st.selectbox("Выберите тип графика:", ["Scatter Plot", "Bar Plot", "Line Plot"])
